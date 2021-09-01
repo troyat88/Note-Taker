@@ -4,7 +4,6 @@ const fs = require("fs");
 const uniqid = require("uniqid")
 
 
-
 var app = express();
 var PORT = process.env.PORT || 3001;
 
@@ -35,15 +34,11 @@ app.post('/api/notes', (req, res) => {
   const { title, text} = req.body;
 
   if (title && text) {
-    // Variable for the object we will save
     const newNote = {
       title,
       text,
       Id: uniqid(),
-    };
-    //fs.writeFileSync("db/db.json",JSON.stringify([newNote]), (err) =>
-    //err ? console.error(err) : console.info(`Success`));
-    
+    }; 
     const notesData = JSON.parse(fs.readFileSync("db/db.json"))
     notesData.push(newNote)
 
@@ -53,7 +48,6 @@ app.post('/api/notes', (req, res) => {
       status: 'success',
       body: newNote,
     };
-
     console.log(response);
     res.status(201).json(response);
   } else {
@@ -61,11 +55,7 @@ app.post('/api/notes', (req, res) => {
   }
 });
 
-app.get("/api/notes/:note", function (req, res) {
-  var selectedNote = req.params.note;
-  res.json(selectedNote);
-});
-
-
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`))
+
+  
